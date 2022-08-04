@@ -13,26 +13,40 @@ let config = {
     maxlength: 50,
   },
 
-  kregister_email: {
+  register_email: {
     required: true,
     email: true,
     minlength: 5,
     maxlength: 50,
   },
 
-  register_lozinke: {
+  register_lozinka: {
     required: true,
     minlength: 7,
     maxlength: 25,
-    matching: "ponovi_lozniku",
+    matching: "ponovi_lozinku",
   },
 
-  ponovi_lozniku: {
+  ponovi_lozinku: {
     required: true,
     minlength: 5,
     maxlength: 50,
-    matching: "register_lozinke",
+    matching: "register_lozinka",
   },
 };
 
 let validator = new Validator(config, "#registrationForm");
+
+document.querySelector("#registrationForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  if (validator.validationPassed()) {
+    let user = new User();
+    user.username = document.querySelector("#korisnicko_ime").value;
+    user.email = document.querySelector("#email").value;
+    user.password = document.querySelector("#lozinka").valu;
+    user.create();
+  } else {
+    alert("Polja nisu dobro popunjena");
+  }
+});
